@@ -1,4 +1,4 @@
-LIBRARY mai2io
+LIBRARY utsio
 EXPORTS
     mai2_io_get_api_version
     mai2_io_init
