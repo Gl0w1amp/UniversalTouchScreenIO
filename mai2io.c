@@ -19,15 +19,28 @@ static bool mai2_io_touch_1p_stop_flag;
 static HANDLE mai2_io_touch_2p_thread;
 static bool mai2_io_touch_2p_stop_flag;
 
+static const wchar_t *mai2_get_config_path(void)
+{
+    static wchar_t path[MAX_PATH];
+    DWORD len;
+
+    len = GetEnvironmentVariableW(L"SEGATOOLS_CONFIG_PATH", path, MAX_PATH);
+    if (len == 0 || len >= MAX_PATH) {
+        return L".\\segatools.ini";
+    }
+
+    return path;
+}
+
 static unsigned int __stdcall mai2_io_touch_1p_thread_proc(void *ctx);
 static unsigned int __stdcall mai2_io_touch_2p_thread_proc(void *ctx);
 
-uint16_t mai2_io_get_api_version(void) { return 0x0101; }
+uint16_t mai2_io_get_api_version(void) { return 0x0102; }
 
 HRESULT mai2_io_init(void) {
     dprintf("[UTS IO] Initializing...\n");
     dprintf("[UTS IO] API Version: %d.%02d\n", mai2_io_get_api_version() >> 8, mai2_io_get_api_version() & 0xFF);
-    mai2_io_config_load(&mai2_io_cfg, L".\\segatools.ini");
+    mai2_io_config_load(&mai2_io_cfg, mai2_get_config_path());
     
     char module_path[MAX_PATH];
     GetModuleFileNameA(NULL, module_path, MAX_PATH);
@@ -311,5 +324,16 @@ void mai2_io_led_gs_update(uint8_t board, const uint8_t *rgb) {
                 rgb[i * 4], rgb[i * 4 + 1], rgb[i * 4 + 2], rgb[i * 4 + 3]);
     }
 #endif
+    return;
+}
+
+void mai2_io_led_billboard_set(uint8_t board, uint8_t *rgb) {
+#if 0
+    uint8_t player = board + 1;
+    dprintf("[UTS IO] Billboard %dP: R:%02X G:%02X B:%02X\n",
+            player, rgb[0], rgb[1], rgb[2]);
+#endif
+    (void) board;
+    (void) rgb;
     return;
 }

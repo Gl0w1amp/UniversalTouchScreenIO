@@ -12,3 +12,4 @@ EXPORTS
     mai2_io_led_set_fet_output
     mai2_io_led_dc_update
     mai2_io_led_gs_update
+    mai2_io_led_billboard_set
