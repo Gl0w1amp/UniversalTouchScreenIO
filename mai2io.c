@@ -327,13 +327,25 @@ void mai2_io_led_gs_update(uint8_t board, const uint8_t *rgb) {
     return;
 }
 
-void mai2_io_led_billboard_set(uint8_t board, uint8_t *rgb) {
+void mai2_io_led_billboard_set(uint8_t board, const uint8_t *rgb) {
 #if 0
     uint8_t player = board + 1;
     dprintf("[UTS IO] Billboard %dP: R:%02X G:%02X B:%02X\n",
             player, rgb[0], rgb[1], rgb[2]);
 #endif
-    (void) board;
-    (void) rgb;
+    (void)board;
+    (void)rgb;
+    return;
+}
+
+void mai2_io_led_cam_set(uint8_t state) {
+#if 0
+    dprintf("[UTS IO] Cam LEDs: CodeReader1P=%s CodeReader2P=%s Ring=%s Rec=%s\n",
+            (state & MAI2_IO_LED_CAM_CODE_READER_1P) ? "ON" : "OFF",
+            (state & MAI2_IO_LED_CAM_CODE_READER_2P) ? "ON" : "OFF",
+            (state & MAI2_IO_LED_CAM_RING) ? "ON" : "OFF",
+            (state & MAI2_IO_LED_CAM_REC) ? "ON" : "OFF");
+#endif
+    (void)state;
     return;
 }
